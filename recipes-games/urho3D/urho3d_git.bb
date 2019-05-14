@@ -12,7 +12,31 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=310c9a68fe03d6c6c8e20f238ef7e46d"
 # License fetching
 S = "${WORKDIR}/git"
 
+DEPENDS = "virtual/libx11 libxext mesa"
+
+do_install_append() {
+
+    # 3 rmdir --ignore-fail-on-non-empty ${D}${systemd_user_unitdir}
+    rm -rf ${D}${datadir}/Urho3D/Scripts/
+    rm -rf ${D}${datadir}/Urho3D/CMake/
+    
+    # TODO: Avoid [pkgconfig] sanity check??
+    rm -rf ${D}${libdir}/pkgconfig
+}
 
 
+INSANE_SKIP_${PN} = "already-stripped"
 
+# http://wiki.koansoftware.com/index.php/Directories_and_installation_variables
+# Assets
+FILES_${PN} += "${datadir}/Urho3D/Resources"
+# Samples
+FILES_${PN} += "${bindir}"
+# libs
+FILES_${PN}-staticdev += "${libdir}"
+# Docs
+FILES_${PN} += "${datadir}/Urho3D/Docs"
+
+
+inherit cmake
 
