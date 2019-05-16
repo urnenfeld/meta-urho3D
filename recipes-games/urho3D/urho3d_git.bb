@@ -9,14 +9,13 @@ SRC_URI = "git://github.com/urho3d/Urho3D.git;protocol=https"
 SRCREV="f1ca13db22e79d94003a11665ec27918220872b2"
 
 LIC_FILES_CHKSUM = "file://LICENSE;md5=310c9a68fe03d6c6c8e20f238ef7e46d"
-# License fetching
+# License fetching ...
 S = "${WORKDIR}/git"
 
 DEPENDS = "virtual/libx11 libxext mesa"
 
 do_install_append() {
-
-    # 3 rmdir --ignore-fail-on-non-empty ${D}${systemd_user_unitdir}
+    # Remove all stuff that we don't want to get packaged
     rm -rf ${D}${datadir}/Urho3D/Scripts/
     rm -rf ${D}${datadir}/Urho3D/CMake/
     
@@ -27,7 +26,7 @@ do_install_append() {
 
 INSANE_SKIP_${PN} = "already-stripped"
 
-# http://wiki.koansoftware.com/index.php/Directories_and_installation_variables
+# A guide on locations: http://wiki.koansoftware.com/index.php/Directories_and_installation_variables
 # Assets
 FILES_${PN} += "${datadir}/Urho3D/Resources"
 # Samples
@@ -37,6 +36,4 @@ FILES_${PN}-staticdev += "${libdir}"
 # Docs
 FILES_${PN} += "${datadir}/Urho3D/Docs"
 
-
 inherit cmake
-
