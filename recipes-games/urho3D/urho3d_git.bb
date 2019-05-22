@@ -14,6 +14,11 @@ S = "${WORKDIR}/git"
 
 DEPENDS = "virtual/libx11 libxext mesa"
 
+# Let yocto the stripping tasks(RelWithDebInfo, Release, Debug), otherwhise invert comments in following 2 lines
+EXTRA_OECMAKE = "-DCMAKE_BUILD_TYPE=Debug"
+# INSANE_SKIP_${PN} = "already-stripped"
+
+
 do_install_append() {
     # Remove all stuff that we don't want to get packaged
     rm -rf ${D}${datadir}/Urho3D/Scripts/
@@ -22,9 +27,6 @@ do_install_append() {
     # TODO: Avoid [pkgconfig] sanity check??
     rm -rf ${D}${libdir}/pkgconfig
 }
-
-
-INSANE_SKIP_${PN} = "already-stripped"
 
 # A guide on locations: http://wiki.koansoftware.com/index.php/Directories_and_installation_variables
 # Assets
