@@ -15,13 +15,12 @@ S = "${WORKDIR}/git"
 DEPENDS = "virtual/libx11 libxext mesa"
 
 # Let yocto the stripping tasks(RelWithDebInfo, Release, Debug), otherwhise invert comments in following 2 lines
-EXTRA_OECMAKE = "-DCMAKE_BUILD_TYPE=Debug -DURHO3D_SSE=0"
-
-# TODO: This should only apply to qemux86(Pentium II), given the lack of SSE support
-# ref: https://www.yoctoproject.org/docs/2.6/mega-manual/mega-manual.html#qemu-kvm-cpu-compatibility
-#EXTRA_OECMAKE += "-DURHO3D_SSE=0"
-
+EXTRA_OECMAKE = "-DCMAKE_BUILD_TYPE=Debug"
 # INSANE_SKIP_${PN} = "already-stripped"
+
+# qemux86(Pentium II), given the lack of SSE support
+# ref: https://www.yoctoproject.org/docs/2.6/mega-manual/mega-manual.html#qemu-kvm-cpu-compatibility
+EXTRA_OECMAKE_append_qemux86 = " -DURHO3D_SSE=0"
 
 
 do_install_append() {
