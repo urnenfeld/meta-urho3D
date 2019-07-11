@@ -1,0 +1,33 @@
+diff --git a/CMake/Modules/UrhoCommon.cmake b/CMake/Modules/UrhoCommon.cmake
+index fd3003e..709ea48 100644
+--- a/CMake/Modules/UrhoCommon.cmake
++++ b/CMake/Modules/UrhoCommon.cmake
+@@ -577,17 +577,19 @@ else ()
+             if (RPI)
+                 # RPI-specific setup
+                 add_definitions (-DRPI)
+-                if (RPI_ABI MATCHES ^armeabi-v7a)
+-                    set (ARM_CFLAGS "${ARM_CFLAGS} -mcpu=cortex-a7")
+-                    if (RPI_ABI MATCHES NEON)
+-                        set (ARM_CFLAGS "${ARM_CFLAGS} -mfpu=neon-vfpv4")
+-                    elseif (RPI_ABI MATCHES VFPV4)
+-                        set (ARM_CFLAGS "${ARM_CFLAGS} -mfpu=vfpv4")
++                if (NOT YOCTO_USED)
++                    if (RPI_ABI MATCHES ^armeabi-v7a)
++                        set (ARM_CFLAGS "${ARM_CFLAGS} -mcpu=cortex-a7")
++                        if (RPI_ABI MATCHES NEON)
++                            set (ARM_CFLAGS "${ARM_CFLAGS} -mfpu=neon-vfpv4")
++                        elseif (RPI_ABI MATCHES VFPV4)
++                            set (ARM_CFLAGS "${ARM_CFLAGS} -mfpu=vfpv4")
++                        else ()
++                            set (ARM_CFLAGS "${ARM_CFLAGS} -mfpu=vfpv4-d16")
++                        endif ()
+                     else ()
+-                        set (ARM_CFLAGS "${ARM_CFLAGS} -mfpu=vfpv4-d16")
++                        set (ARM_CFLAGS "${ARM_CFLAGS} -mcpu=arm1176jzf-s -mfpu=vfp")
+                     endif ()
+-                else ()
+-                    set (ARM_CFLAGS "${ARM_CFLAGS} -mcpu=arm1176jzf-s -mfpu=vfp")
+                 endif ()
+             else ()
+                 # Generic ARM-specific setup
