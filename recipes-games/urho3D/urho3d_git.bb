@@ -12,7 +12,7 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=310c9a68fe03d6c6c8e20f238ef7e46d"
 # License fetching ...
 S = "${WORKDIR}/git"
 
-DEPENDS = "virtual/libx11 libxext mesa"
+DEPENDS = "virtual/libx11 libxext virtual/libgl"
 
 # Let yocto the stripping tasks(RelWithDebInfo, Release, Debug), otherwhise invert comments in following 2 lines
 EXTRA_OECMAKE = "-DCMAKE_BUILD_TYPE=Debug"
