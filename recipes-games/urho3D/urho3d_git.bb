@@ -6,7 +6,7 @@ LICENSE = "MIT"
 
 SRC_URI = "git://github.com/urho3d/Urho3D.git;protocol=https"
 # SRC_URI = "git://github.com/urho3d/Urho3D.git"
-SRC_URI += "file://000_trust_yocto_for_cpu_tunning.patch"
+SRC_URI_append_raspberrypi0-wifi += "file://000_trust_yocto_for_cpu_tunning.patch"
 
 SRCREV="f1ca13db22e79d94003a11665ec27918220872b2"
 
