@@ -6,7 +6,7 @@ LICENSE = "MIT"
 
 SRC_URI = "git://github.com/urho3d/Urho3D.git;protocol=https"
 # SRC_URI = "git://github.com/urho3d/Urho3D.git"
-SRC_URI += "file://000_trust_yocto_for_cpu_tunning.patch"
+SRC_URI_append_raspberrypi0-wifi += "file://000_trust_yocto_for_cpu_tunning.patch"
 
 SRCREV="f1ca13db22e79d94003a11665ec27918220872b2"
 
@@ -14,7 +14,7 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=310c9a68fe03d6c6c8e20f238ef7e46d"
 # License fetching ...
 S = "${WORKDIR}/git"
 
-DEPENDS = "virtual/libx11 libxext mesa-gl"
+DEPENDS = "virtual/libx11 libxext virtual/libgl"
 
 # Let yocto the stripping tasks(RelWithDebInfo, Release, Debug),
 # Check patch 000
