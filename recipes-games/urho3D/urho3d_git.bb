@@ -28,6 +28,12 @@ EXTRA_OECMAKE_append_qemux86 = " -DURHO3D_SSE=0"
 # URHO3D_LUA=0 : Problems checking for native compiler in CMakeLists.txt:205 (check_native_compiler_exist)
 # symt: SAVEC_CC are empty, however "/mnt/pyro/build-r0w/tmp/hosttools/gcc" is used, there typical arm options are passed => X
 # URHO3D_ANGELSCRIPT: Problems finding essential headers...
+# ~~ https://github.com/ponylang/ponyc/issues/797
+# ~~ https://github.com/ponylang/ponyc/issues/3016
+# ~~ https://github.com/ponylang/ponyc/pull/824
+# https://answers.opencv.org/question/172521/error-compiling-opencv-300-in-raspberry-pi-zero/
+# https://gcc.gnu.org/bugzilla/show_bug.cgi?id=70936
+# https://gcc.gnu.org/bugzilla/show_bug.cgi?id=71090
 EXTRA_OECMAKE_append_raspberrypi0-wifi = " -DRPI=1 -DURHO3D_LUA=0 -DURHO3D_ANGELSCRIPT=0"
 DEPENDS_append_raspberrypi0-wifi = " virtual/libgles2 virtual/egl"
 
