@@ -1,0 +1,13 @@
+diff --git a/CMake/Modules/UrhoCommon.cmake b/CMake/Modules/UrhoCommon.cmake
+index fd3003e..1680bff 100644
+--- a/CMake/Modules/UrhoCommon.cmake
++++ b/CMake/Modules/UrhoCommon.cmake
+@@ -160,7 +160,7 @@ endif ()
+ if (RPI)
+     # TODO: this logic is earmarked to be moved into SDL's CMakeLists.txt when refactoring the library dependency handling
+     find_package (VideoCore REQUIRED)
+-    include_directories (SYSTEM ${VIDEOCORE_INCLUDE_DIRS})
++    include_directories (${VIDEOCORE_INCLUDE_DIRS})
+     link_directories (${VIDEOCORE_LIBRARY_DIRS})
+ endif ()
+ if (CMAKE_PROJECT_NAME STREQUAL Urho3D)
