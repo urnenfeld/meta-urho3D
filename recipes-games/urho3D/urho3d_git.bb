@@ -25,6 +25,7 @@ SRC_URI_append_raspberrypi0-wifi += "file://000_trust_yocto_for_cpu_tunning.patc
 #   https://gitlab.kitware.com/cmake/cmake/issues/17348
 # => list (APPEND TARGET_PROPERTIES NO_SYSTEM_FROM_IMPORTED true) @UrhoCommon.cmake#1755
 SRC_URI_append_raspberrypi0-wifi += "file://001_magically_avoid_isystem.patch"
+SRC_URI_append_raspberrypi0-wifi += "file://002_avoid_brcm_gl_libs.patch"
 
 SRCREV="f1ca13db22e79d94003a11665ec27918220872b2"
 
@@ -33,7 +34,8 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=310c9a68fe03d6c6c8e20f238ef7e46d"
 S = "${WORKDIR}/git"
 
 DEPENDS = "virtual/libx11 libxext virtual/libgl"
-DEPENDS_append_raspberrypi0-wifi = " virtual/libgles2 virtual/egl"
+DEPENDS_append_raspberrypi0-wifi = " virtual/libgles2"
+#DEPENDS_append_raspberrypi0-wifi = " virtual/egl"
 
 # Let yocto the stripping tasks(RelWithDebInfo, Release, Debug),
 EXTRA_OECMAKE = "-DCMAKE_BUILD_TYPE=Debug"
