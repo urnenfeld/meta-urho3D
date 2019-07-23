@@ -1,0 +1,18 @@
+diff --git a/Source/Samples/CMakeLists.txt b/Source/Samples/CMakeLists.txt
+index 4d59814..ad7fe65 100644
+--- a/Source/Samples/CMakeLists.txt
++++ b/Source/Samples/CMakeLists.txt
+@@ -55,7 +55,11 @@ file (GLOB_RECURSE DIRS RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} CMakeLists.txt)
+ list (SORT DIRS)
+ foreach (DIR ${DIRS})
+     get_filename_component (DIR ${DIR} PATH)
+-    if (DIR)
+-        add_sample_subdirectory (${DIR})
++    if ("${DIR}" MATCHES "(OECORE_URHO3D_SELECTED_SAMPLES)")
++        if (DIR)
++            add_sample_subdirectory (${DIR})
++        endif ()
++    else ()
++        message (WARNING "Discarding Sample ${DIR}")
+     endif ()
+ endforeach ()

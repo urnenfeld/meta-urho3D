@@ -6,6 +6,8 @@ LICENSE = "MIT"
 
 SRC_URI = "git://github.com/urho3d/Urho3D.git;protocol=https"
 # SRC_URI = "git://github.com/urho3d/Urho3D.git"
+SRC_URI += "file://003_select_samples.patch"
+
 SRC_URI_append_raspberrypi0-wifi += "file://000_trust_yocto_for_cpu_tunning.patch"
 
 # On why -I -isystem ...
@@ -61,6 +63,17 @@ do_install_append() {
 
     # TODO: Avoid [pkgconfig] sanity check??
     rm -rf ${D}${libdir}/pkgconfig
+}
+
+# Samples take a lot of space in image, build for now the most helpful until removing them -DURHO3D_SAMPLES=0
+URHO3D_SELECTED_SAMPLES ?= "HelloWorld|HelloGUI|StaticScene"
+
+do_patch_append() {
+    bb.build.exec_func('do_selected_samples', d)
+}
+
+do_selected_samples () {
+	sed -i -e 's#OECORE_URHO3D_SELECTED_SAMPLES#${URHO3D_SELECTED_SAMPLES}#' ${S}/Source/Samples/CMakeLists.txt
 }
 
 # A guide on locations: http://wiki.koansoftware.com/index.php/Directories_and_installation_variables
