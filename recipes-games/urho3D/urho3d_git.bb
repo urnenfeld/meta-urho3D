@@ -28,6 +28,8 @@ SRC_URI_append_raspberrypi0-wifi += "file://000_trust_yocto_for_cpu_tunning.patc
 # => list (APPEND TARGET_PROPERTIES NO_SYSTEM_FROM_IMPORTED true) @UrhoCommon.cmake#1755
 SRC_URI_append_raspberrypi0-wifi += "file://001_magically_avoid_isystem.patch"
 SRC_URI_append_raspberrypi0-wifi += "file://002_avoid_brcm_gl_libs.patch"
+SRC_URI_append_raspberrypi0-wifi += "file://004_not_stripping_shared_lib.patch"
+
 
 SRCREV="f1ca13db22e79d94003a11665ec27918220872b2"
 
@@ -43,8 +45,8 @@ DEPENDS_append_raspberrypi0-wifi = " virtual/libgles2"
 EXTRA_OECMAKE = "-DCMAKE_BUILD_TYPE=Debug"
 # INSANE_SKIP_${PN} = "already-stripped"
 
-# Check patch 000
-EXTRA_OECMAKE += "-DYOCTO_USED=1"
+# Check patch 000 & 004
+EXTRA_OECMAKE += "-DYOCTO_USED=1 -DURHO3D_LIB_TYPE=SHARED"
 
 # qemux86(Pentium II), given the lack of SSE support
 # ref: https://www.yoctoproject.org/docs/2.6/mega-manual/mega-manual.html#qemu-kvm-cpu-compatibility
@@ -81,8 +83,16 @@ do_selected_samples () {
 FILES_${PN} += "${datadir}/Urho3D/Resources"
 # Samples
 FILES_${PN} += "${bindir}"
-# libs
-FILES_${PN}-staticdev += "${libdir}"
+
+# -DURHO3D_LIB_TYPE=SHARED
+# Otherwise fails [dev-so]
+FILES_${PN}-dev += "${libdir}"
+# TODO: urho3d depends on urho3d-dev
+INSANE_SKIP_${PN} += "dev-deps"
+
+# Not -DURHO3D_LIB_TYPE=SHARED
+#FILES_${PN}-staticdev += "${libdir}"
+
 # Docs
 FILES_${PN} += "${datadir}/Urho3D/Docs"
 
