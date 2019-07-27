@@ -68,7 +68,7 @@ do_install_append() {
 }
 
 # Samples take a lot of space in image, build for now the most helpful until removing them -DURHO3D_SAMPLES=0
-URHO3D_SELECTED_SAMPLES ?= "HelloWorld|HelloGUI|StaticScene"
+URHO3D_SELECTED_SAMPLES ?= "HelloWorld|HelloGUI|StaticScene|Physics|Sprites"
 
 do_patch_append() {
     bb.build.exec_func('do_selected_samples', d)
