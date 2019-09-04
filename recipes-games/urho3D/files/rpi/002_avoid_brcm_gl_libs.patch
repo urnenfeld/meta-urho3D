@@ -1,16 +1,3 @@
-diff --git a/CMake/Modules/FindVideoCore.cmake b/CMake/Modules/FindVideoCore.cmake
-index 18134e8..006f104 100644
---- a/CMake/Modules/FindVideoCore.cmake
-+++ b/CMake/Modules/FindVideoCore.cmake
-@@ -42,7 +42,7 @@ if (VIDEOCORE_FOUND)
-     list (APPEND VIDEOCORE_INCLUDE_DIRS ${VIDEOCORE_INCLUDE_DIRS}/interface/vcos/pthreads ${VIDEOCORE_INCLUDE_DIRS}/interface/vmcs_host/linux)
-     # Assume all the other libraries are installed at same relative path as libbcm_host.so
-     get_filename_component (VIDEOCORE_LIBRARY_DIRS ${VIDEOCORE_LIBRARIES} PATH)
--    set (VIDEOCORE_LIBRARIES bcm_host)
-+    set (VIDEOCORE_LIBRARIES bcm_host vchostif)
- endif ()
- 
- mark_as_advanced (VIDEOCORE_INCLUDE_DIRS VIDEOCORE_LIBRARIES)
 diff --git a/CMake/Modules/UrhoCommon.cmake b/CMake/Modules/UrhoCommon.cmake
 index fd3003e..f8ab9c7 100644
 --- a/CMake/Modules/UrhoCommon.cmake

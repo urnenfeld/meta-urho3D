@@ -26,8 +26,11 @@ SRC_URI_append_raspberrypi0-wifi += "file://000_trust_yocto_for_cpu_tunning.patc
 #   https://gitlab.kitware.com/cmake/cmake/issues/17364
 #   https://gitlab.kitware.com/cmake/cmake/issues/17348
 # => list (APPEND TARGET_PROPERTIES NO_SYSTEM_FROM_IMPORTED true) @UrhoCommon.cmake#1755
-SRC_URI_append_raspberrypi0-wifi += "file://001_magically_avoid_isystem.patch"
+SRC_URI_append_raspberrypi0-wifi += "${@bb.utils.contains("MACHINE_FEATURES", "vc4graphics", "file://005_do_not_search_videocore.patch", "file://001_magically_avoid_isystem.patch", d)}"
+
 SRC_URI_append_raspberrypi0-wifi += "file://002_avoid_brcm_gl_libs.patch"
+# TODO: not needed with vc4graphics
+SRC_URI_append_raspberrypi0-wifi += "file://002a_search_vchostif_as_well.patch"
 SRC_URI_append_raspberrypi0-wifi += "file://004_not_stripping_shared_lib.patch"
 
 
@@ -68,6 +71,7 @@ do_install_append() {
 }
 
 # Samples take a lot of space in image, build for now the most helpful until removing them -DURHO3D_SAMPLES=0
+# Check patch 003_select_samples
 URHO3D_SELECTED_SAMPLES ?= "HelloWorld|HelloGUI|StaticScene|Physics|Sprites"
 
 do_patch_append() {
