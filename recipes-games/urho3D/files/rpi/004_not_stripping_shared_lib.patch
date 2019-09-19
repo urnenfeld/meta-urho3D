@@ -1,0 +1,13 @@
+diff --git a/Source/Urho3D/CMakeLists.txt b/Source/Urho3D/CMakeLists.txt
+index 81c6bfa..516cb4e 100644
+--- a/Source/Urho3D/CMakeLists.txt
++++ b/Source/Urho3D/CMakeLists.txt
+@@ -571,7 +571,7 @@ if (ANDROID AND GRADLE_BUILD_DIR)
+         COMMENT "Copying Urho3D library to URHO3D_HOME directory")
+     add_make_clean_files (${ABI_LIB_DIR}/$<TARGET_FILE_NAME:${TARGET_NAME}>)
+ endif ()
+-if (URHO3D_LIB_TYPE STREQUAL SHARED AND ARM)
++if (URHO3D_LIB_TYPE STREQUAL SHARED AND ARM AND NOT YOCTO_USED)
+     # Strip the output shared library for embedded ARM platforms (we don't do this for Android anymore, assuming Android plugin will take care of it)
+     add_custom_command (TARGET ${TARGET_NAME} POST_BUILD COMMAND ${CMAKE_STRIP} $<TARGET_FILE:${TARGET_NAME}>
+         COMMENT "Stripping Urho3D shared library")

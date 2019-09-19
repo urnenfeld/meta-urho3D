@@ -1,0 +1,17 @@
+diff --git a/CMake/Modules/UrhoCommon.cmake b/CMake/Modules/UrhoCommon.cmake
+index fd3003eb3..725ca87ad 100644
+--- a/CMake/Modules/UrhoCommon.cmake
++++ b/CMake/Modules/UrhoCommon.cmake
+@@ -159,9 +159,9 @@ endif ()
+ # For Raspbery Pi, find Broadcom VideoCore IV firmware
+ if (RPI)
+     # TODO: this logic is earmarked to be moved into SDL's CMakeLists.txt when refactoring the library dependency handling
+-    find_package (VideoCore REQUIRED)
+-    include_directories (SYSTEM ${VIDEOCORE_INCLUDE_DIRS})
+-    link_directories (${VIDEOCORE_LIBRARY_DIRS})
++#    find_package (VideoCore REQUIRED)
++#    include_directories (${VIDEOCORE_INCLUDE_DIRS})
++#    link_directories (${VIDEOCORE_LIBRARY_DIRS})
+ endif ()
+ if (CMAKE_PROJECT_NAME STREQUAL Urho3D)
+     set (URHO3D_LIB_TYPE STATIC CACHE STRING "Specify Urho3D library type, possible values are STATIC (default), SHARED, and MODULE; the last value is available for Emscripten only")

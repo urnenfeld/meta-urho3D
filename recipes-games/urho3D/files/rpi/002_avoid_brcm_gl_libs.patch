@@ -1,0 +1,13 @@
+diff --git a/CMake/Modules/UrhoCommon.cmake b/CMake/Modules/UrhoCommon.cmake
+index fd3003e..f8ab9c7 100644
+--- a/CMake/Modules/UrhoCommon.cmake
++++ b/CMake/Modules/UrhoCommon.cmake
+@@ -920,7 +920,7 @@ macro (define_dependency_libs TARGET)
+             elseif (WIN32)
+                 list (APPEND LIBS opengl32)
+             elseif (RPI)
+-                list (APPEND LIBS brcmGLESv2)
++                list (APPEND LIBS GLESv2)
+             elseif (ANDROID OR ARM)
+                 list (APPEND LIBS GLESv1_CM GLESv2)
+             else ()
