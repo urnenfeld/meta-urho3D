@@ -28,6 +28,8 @@ SRC_URI_append_raspberrypi0-wifi += "file://000_trust_yocto_for_cpu_tunning.patc
 # => list (APPEND TARGET_PROPERTIES NO_SYSTEM_FROM_IMPORTED true) @UrhoCommon.cmake#1755
 SRC_URI_append_raspberrypi0-wifi += "${@bb.utils.contains("MACHINE_FEATURES", "vc4graphics", "file://005_do_not_search_videocore.patch", "file://001_magically_avoid_isystem.patch", d)}"
 
+SRC_URI_append_raspberrypi0-wifi += "${@bb.utils.contains("MACHINE_FEATURES", "vc4graphics", "file://006_use_x11_instead_rpi_video.patch", "", d)}"
+
 SRC_URI_append_raspberrypi0-wifi += "file://002_avoid_brcm_gl_libs.patch"
 # TODO: not needed with vc4graphics
 SRC_URI_append_raspberrypi0-wifi += "file://002a_search_vchostif_as_well.patch"
