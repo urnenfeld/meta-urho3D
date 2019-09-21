@@ -5,15 +5,15 @@ Please see the corresponding sections below for details.
 Dependencies
 ============
 
-  URI: <first dependency>
-  branch: <branch name>
+  URI: poky https://git.yoctoproject.org/git/poky
+  branch: thud
 
-  URI: <second dependency>
-  branch: <branch name>
+Machines supported
+------------------
 
-  .
-  .
-  .
+  URI: meta-raspberry https://git.yoctoproject.org/git/meta-raspberrypi
+  branch: thud
+
 
 Patches
 =======
