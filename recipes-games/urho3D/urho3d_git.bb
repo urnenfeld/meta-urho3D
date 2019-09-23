@@ -93,8 +93,9 @@ FILES_${PN} += "${bindir}"
 # -DURHO3D_LIB_TYPE=SHARED
 # Otherwise fails [dev-so]
 FILES_${PN}-dev += "${libdir}"
-# TODO: urho3d depends on urho3d-dev
+# TODO: urho3d rdepends on urho3d-dev: RDEPENDS_${PN} = "${PN}-dev"
 INSANE_SKIP_${PN} += "dev-deps"
+
 
 # Not -DURHO3D_LIB_TYPE=SHARED
 #FILES_${PN}-staticdev += "${libdir}"
