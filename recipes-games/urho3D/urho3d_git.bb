@@ -87,20 +87,25 @@ do_selected_samples () {
 # A guide on locations: http://wiki.koansoftware.com/index.php/Directories_and_installation_variables
 # Assets
 FILES_${PN} += "${datadir}/Urho3D/Resources"
+
 # Samples
 FILES_${PN} += "${bindir}"
 
+# Docs
+FILES_${PN} += "${datadir}/Urho3D/Docs"
+
+
 # -DURHO3D_LIB_TYPE=SHARED
 # Otherwise fails [dev-so]
-FILES_${PN}-dev += "${libdir}"
+#FILES_${PN}-dev += "${libdir}"
 # TODO: urho3d rdepends on urho3d-dev: RDEPENDS_${PN} = "${PN}-dev"
-INSANE_SKIP_${PN} += "dev-deps"
-
+#INSANE_SKIP_${PN} += "dev-deps"
+PACKAGES =+ "lib${BPN}"
+FILES_lib${BPN} = "${libdir}/Urho3D/lib*.so.*"
+FILES_${PN}-dev += "${libdir}/Urho3D/*.so"
 
 # Not -DURHO3D_LIB_TYPE=SHARED
 #FILES_${PN}-staticdev += "${libdir}"
 
-# Docs
-FILES_${PN} += "${datadir}/Urho3D/Docs"
 
 inherit cmake
