@@ -1,0 +1,87 @@
+diff --git a/Source/Mods/ModLoader.cpp b/Source/Mods/ModLoader.cpp
+index ed2d01e..58c3573 100644
+--- a/Source/Mods/ModLoader.cpp
++++ b/Source/Mods/ModLoader.cpp
+@@ -1,6 +1,8 @@
+ #include <Urho3D/Core/Context.h>
+ #include <Urho3D/AngelScript/Script.h>
++#ifdef LUA_ENABLED
+ #include <Urho3D/LuaScript/LuaScript.h>
++#endif
+ #include <Urho3D/Resource/ResourceEvents.h>
+ #include <Urho3D/Resource/ResourceCache.h>
+ #include <Urho3D/IO/PackageFile.h>
+@@ -28,9 +30,11 @@ void ModLoader::Init()
+         auto asScript = new Script(context_);
+         context_->RegisterSubsystem(asScript);
+         asScript->SetExecuteConsoleCommands(false);
++#ifdef LUA_ENABLED
+         auto luaScript = new LuaScript(context_);
+         context_->RegisterSubsystem(luaScript);
+         luaScript->SetExecuteConsoleCommands(false);
++#endif
+         Create();
+         SubscribeToEvents();
+     }
+@@ -39,8 +43,9 @@ void ModLoader::Init()
+ void ModLoader::Create()
+ {
+     LoadASMods();
++#ifdef LUA_ENABLED
+     LoadLuaMods();
+-
++#endif
+     SubscribeToEvent(E_FILECHANGED, URHO3D_HANDLER(ModLoader, HandleReloadScript));
+ 
+     CheckAllMods();
+@@ -84,7 +89,7 @@ void ModLoader::LoadASMods()
+ 
+     GetSubsystem<DebugHud>()->SetAppStats("Total AS mods loaded", _asMods.Size());
+ }
+-
++#ifdef LUA_ENABLED
+ void ModLoader::LoadLuaMods()
+ {
+     ResourceCache* cache = GetSubsystem<ResourceCache>();
+@@ -124,7 +129,7 @@ void ModLoader::LoadLuaMods()
+ 
+     GetSubsystem<DebugHud>()->SetAppStats("Total LUA mods loaded", _luaMods.Size());
+ }
+-
++#endif
+ void ModLoader::SubscribeToEvents()
+ {
+ 	SubscribeConsoleCommands();
+@@ -169,14 +174,19 @@ void ModLoader::HandleReload(StringHash eventType, VariantMap& eventData)
+ void ModLoader::CheckAllMods()
+ {
+     Vector<String> result;
++#ifdef LUA_ENABLED
+     result.Reserve(_asMods.Size() + _luaMods.Size());
++#else
++    result.Reserve(_asMods.Size());
++#endif
+     for (auto it = _asMods.Begin(); it != _asMods.End(); ++it) {
+         result.Push((*it)->GetName());
+     }
++#ifdef LUA_ENABLED
+     for (auto it = _luaMods.Begin(); it != _luaMods.End(); ++it) {
+         result.Push((*it));
+     }
+-
++#endif
+     VariantMap data = GetEventDataMap();
+     data["Mods"] = result;
+     SendEvent("ModsLoaded", data);
+@@ -190,7 +200,11 @@ void ModLoader::HandleReloadScript(StringHash eventType, VariantMap& eventData)
+ 
+     using namespace FileChanged;
+     String filename = eventData[P_RESOURCENAME].GetString();
++#ifdef LUA_ENABLED
+     if (!filename.Contains(".as") && !filename.Contains(".lua")) {
++#else
++    if (!filename.Contains(".as")) {
++#endif
+         // We don't care about resources other than .as and .lua
+         return;
+     }

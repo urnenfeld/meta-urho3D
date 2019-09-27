@@ -4,7 +4,7 @@ SUMMARY = "A very basic urho3d image"
 
 SPLASH = "psplash-urho3d"
 
-IMAGE_INSTALL += "urho3d"
+IMAGE_INSTALL += "urho3d urho3d-project-template"
 # in theory helps psplash
 IMAGE_INSTALL += "kernel-modules"
 
