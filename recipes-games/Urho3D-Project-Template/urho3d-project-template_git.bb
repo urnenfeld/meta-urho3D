@@ -11,7 +11,9 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=30b83a9c563c75e79b183f051ba08911"
 # License fetching ...
 S = "${WORKDIR}/git"
 
-URHO3D_GAME_NAME = "ArnisTemplate"
+URHO3D_GAME_ID = "ProjectTemplate"
+URHO3D_GAME_GENRE = "misc"
+# URHO3D_GAME_SUBGENRE = "misc"
 
 inherit arnistemplate
 
