@@ -3,15 +3,7 @@ DEPENDS = "urho3d"
 dassetsdir = "${datadir}/Urho3D/${URHO3D_GAME_ID}-assets"
 sassetsdir ?= ""
 
-do_install_append() {
-         install -d ${D}${dassetsdir}
-         install -d ${D}${dassetsdir}/CoreData
-         install -d ${D}${dassetsdir}/Data
-
-         cp --preserve=mode,timestamps -R ${S}${sassetsdir}/CoreData/* ${D}${dassetsdir}/CoreData
-         cp --preserve=mode,timestamps -R ${S}${sassetsdir}/Data/* ${D}${dassetsdir}/Data
-}
-
+MANIFEST_NAME_JSON ?= "urhofest.json"
 
 # A way of separating the assets from the binary
 # PACKAGES =+ "${PN}-assets"
@@ -19,12 +11,11 @@ do_install_append() {
 
 FILES_${PN} += "${dassetsdir}/*"
 
-MANIFEST_NAME_JSON ?= "urhofest.json"
 
 python do_create_urhofest () {
     import json
 
-    filename = d.expand("${D}${dassetsdir}/${MANIFEST_NAME_JSON}")
+    filename = d.expand("${WORKDIR}/${MANIFEST_NAME_JSON}")
 
     urhofest_dict = [
                         ["Summary", d.getVar("SUMMARY")],
@@ -40,12 +31,6 @@ python do_create_urhofest () {
         json.dump(urhofest_dict, urhofest_file, indent=True)
 
     os.chmod(filename, 0o644)
-}
-
-
-do_urhofest_uncontaminate () {
-        # Avoid host contamination
-        chown root:root ${D}${dassetsdir}/${MANIFEST_NAME_JSON}
 }
 
 
@@ -68,10 +53,17 @@ python do_urhofest_qa () {
 }
 
 
-addtask urhofest_qa after do_install before do_create_urhofest
-addtask create_urhofest after do_urhofest_qa before do_package
+do_install_append() {
+         install -d ${D}${dassetsdir}
+         install -d ${D}${dassetsdir}/CoreData
+         install -d ${D}${dassetsdir}/Data
 
-# TODO: Avoid host contamination warning
-# addtask urhofest_qa after do_install before do_create_urhofest
-# addtask create_urhofest after do_urhofest_qa before urhofest_uncontaminate
-# addtask urhofest_uncontaminate after do_create_urhofest before do_package
+         install ${WORKDIR}/${MANIFEST_NAME_JSON} ${D}${dassetsdir}
+
+         cp --preserve=mode,timestamps -R ${S}${sassetsdir}/CoreData/* ${D}${dassetsdir}/CoreData
+         cp --preserve=mode,timestamps -R ${S}${sassetsdir}/Data/* ${D}${dassetsdir}/Data
+}
+
+
+addtask urhofest_qa after do_compile before create_urhofest
+addtask create_urhofest after do_urhofest_qa before do_install
