@@ -1,0 +1,11 @@
+MACHINE_FEATURES += "vc4graphics"
+IMAGE_VERSION_SUFFIX = "-hernan-${DATETIME}"
+
+RM_OLD_IMAGE = "1"
+IMAGE_FSTYPES_remove = "tar.bz2"
+# IMAGE_FSTYPES_remove = "rpi-sdimg"
+IMAGE_FSTYPES_remove = "ext3"
+
+
+# INHERIT += "rm_work"
+# RM_WORK_EXCLUDE += "home-assistant widde"
