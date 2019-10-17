@@ -17,15 +17,13 @@ python do_create_urhofest () {
 
     filename = d.expand("${WORKDIR}/${MANIFEST_NAME_JSON}")
 
-    urhofest_dict = [
-                        ["Summary", d.getVar("SUMMARY")],
-                        ["Description", d.getVar("DESCRIPTION")],
-                        ["HomePage", d.getVar("HOMEPAGE")],
-                        ["Id", d.getVar("URHO3D_GAME_ID")],
-                        ["Genre", d.getVar("URHO3D_GAME_GENRE")],
-                        ["Subgenre", d.getVar("URHO3D_GAME_SUBGENRE")],
-                        ["Adult", d.getVar("URHO3D_GAME_ADULT_QUALIFICATION")],
-                    ]
+    urhofest_dict =     {"Summary": d.getVar("SUMMARY"),
+                         "Description": d.getVar("DESCRIPTION"),
+                         "HomePage": d.getVar("HOMEPAGE"),
+                         "Id": d.getVar("URHO3D_GAME_ID"),
+                         "Genre": d.getVar("URHO3D_GAME_GENRE"),
+                         "Subgenre": d.getVar("URHO3D_GAME_SUBGENRE"),
+                         "Adult": d.getVar("URHO3D_GAME_ADULT_QUALIFICATION")}
 
     with open (filename,'w') as urhofest_file:
         json.dump(urhofest_dict, urhofest_file, indent=True)
