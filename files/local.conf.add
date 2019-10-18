@@ -8,4 +8,4 @@ IMAGE_FSTYPES_remove = "ext3"
 
 
 # INHERIT += "rm_work"
-# RM_WORK_EXCLUDE += "home-assistant widde"
+# RM_WORK_EXCLUDE += "urho3d core-image-urho3d"
