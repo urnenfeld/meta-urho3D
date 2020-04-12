@@ -3,7 +3,7 @@ LICENSE = "MIT"
 
 SRC_URI = "git://github.com/urnenfeld/theFin.git;protocol=https"
 
-SRCREV="d1bd687dadcb03243f2b6cdb8c5900be46f042d5"
+SRCREV="93abbb5fa93f77081d2734153f43641311e6f1ef"
 
 LIC_FILES_CHKSUM = "file://../git/LICENSE;md5=5d8bf837acaa37ac750d9fdf56fe9f54"
 
@@ -16,6 +16,12 @@ EXTRA_OEMAKE += "'RECIPE_SYSROOT=${RECIPE_SYSROOT}'"
 EXTRA_OEMAKE += "'CC=${CC}' 'CXX=${CXX}'"
 EXTRA_OEMAKE += "'CFLAGS=${CFLAGS}' 'CXXFLAGS=${CXXFLAGS}'"
 EXTRA_OEMAKE += "'LDFLAGS=${LDFLAGS}'"
+
+
+do_patch[postfuncs] += "set_makefile"
+set_makefile () {
+    mv ${S}/Makefile.yocto ${S}/Makefile
+}
 
 do_install() {
     install -d ${D}${bindir}
