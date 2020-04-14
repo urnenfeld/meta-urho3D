@@ -9,19 +9,20 @@ LIC_FILES_CHKSUM = "file://../git/LICENSE;md5=5d8bf837acaa37ac750d9fdf56fe9f54"
 
 S = "${WORKDIR}/git"
 
-DEPENDS = "urho3d"
-
+URHO3D_COMPONENT_ID="theFin"
+URHO3D_REUSE_CORE_ASSETS = "1"
+inherit urholauncher
 
 EXTRA_OEMAKE += "'RECIPE_SYSROOT=${RECIPE_SYSROOT}'"
 EXTRA_OEMAKE += "'CC=${CC}' 'CXX=${CXX}'"
 EXTRA_OEMAKE += "'CFLAGS=${CFLAGS}' 'CXXFLAGS=${CXXFLAGS}'"
 EXTRA_OEMAKE += "'LDFLAGS=${LDFLAGS}'"
 
-
 do_patch[postfuncs] += "set_makefile"
 set_makefile () {
     mv ${S}/Makefile.yocto ${S}/Makefile
 }
+
 
 do_install() {
     install -d ${D}${bindir}
