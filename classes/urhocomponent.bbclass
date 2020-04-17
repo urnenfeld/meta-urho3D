@@ -4,6 +4,7 @@ URHO3D_GAME_ID ?= ""
 URHO3D_COMPONENT_ID ?= "${URHO3D_GAME_ID}"
 
 URHO3D_ASSETS_BASE = "${datadir}/Urho3D"
+URHO3D_ASSETS_PATHS ?= "Data CoreData"
 
 dassetsdir = "${URHO3D_ASSETS_BASE}/${URHO3D_COMPONENT_ID}-assets"
 sassetsdir ?= ""
@@ -15,20 +16,15 @@ FILES_${PN} += "${dassetsdir}/*"
 
 
 do_install_append() {
+#    if [ "${URHO3D_REUSE_CORE_ASSETS}" = "1" ] ; then
 
-    if [ "${URHO3D_REUSE_CORE_ASSETS}" = "1" ] ; then
-        # NOTE: This link breaks packaging rules
-        # install -d ${D}${datadir}/Urho3D
-        # ln -s Resources ${D}${dassetsdir}
-        :
-    else
-        install -d ${D}${dassetsdir}
-        install -d ${D}${dassetsdir}/CoreData
-        install -d ${D}${dassetsdir}/Data
+    install -d ${D}${dassetsdir}
 
-        cp --preserve=mode,timestamps -R ${S}${sassetsdir}/CoreData/* ${D}${dassetsdir}/CoreData
-        cp --preserve=mode,timestamps -R ${S}${sassetsdir}/Data/* ${D}${dassetsdir}/Data
-    fi
+    for path in ${URHO3D_ASSETS_PATHS}
+    do
+        install -d ${D}${dassetsdir}/$path
+        cp --preserve=mode,timestamps -R ${S}${sassetsdir}/$path/* ${D}${dassetsdir}/$path
+    done
 
 }
 
@@ -36,7 +32,15 @@ do_install_append() {
 python do_urhocomponent_qa () {
 
     if not d.expand("${URHO3D_COMPONENT_ID}"):
-            bb.error("No URHO3D_COMPONENT_ID or URHO3D_GAME_ID specified in recipe, ...")
+            bb.error("No URHO3D_COMPONENT_ID or URHO3D_GAME_ID specified in recipe")
+
+    if d.getVar("URHO3D_REUSE_CORE_ASSETS") == "1":
+        urhoassets = ['Data','CoreData']
+        assets = d.getVar("URHO3D_ASSETS_PATHS").split(" ")
+
+        if [path for path in urhoassets if path in assets]:
+            bb.error("URHO3D_ASSETS_PATHS match with the standard provided by engine, but URHO3D_REUSE_CORE_ASSETS is set.")
+
 
 }
 

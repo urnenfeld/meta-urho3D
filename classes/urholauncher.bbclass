@@ -9,7 +9,7 @@ python do_create_launcher () {
         urhofest_file.write("#!/bin/sh\n")
 
         if d.getVar("URHO3D_REUSE_CORE_ASSETS") == "1":
-            urhofest_file.write(d.expand("export URHO3D_PREFIX_PATH=${URHO3D_ASSETS_BASE}/Resources\n"))
+            urhofest_file.write(d.expand("export URHO3D_PREFIX_PATH=\"${dassetsdir};${URHO3D_ASSETS_BASE}/Resources\"\n"))
         else:
             urhofest_file.write(d.expand("export URHO3D_PREFIX_PATH=${dassetsdir}\n"))
 
