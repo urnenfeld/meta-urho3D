@@ -5,9 +5,9 @@ SUMMARY = "A very basic urho3d image"
 SPLASH = "psplash-urho3d"
 
 IMAGE_INSTALL += "urho3d urho3d-project-template thefin"
+IMAGE_FEATURES += "ssh-server-dropbear"
 # in theory helps psplash
 # IMAGE_INSTALL += "kernel-modules"
-
 
 IMAGE_INSTALL += "${@bb.utils.contains("MACHINE_FEATURES", "wifi", "wpa-supplicant", "", d)}"
 # IMAGE_INSTALL += "${@bb.utils.contains("MACHINE_FEATURES", "bluetooth", "bluez5", "", d)}"
@@ -28,9 +28,9 @@ IMAGE_INSTALL += "${@bb.utils.contains("MACHINE_FEATURES", "wifi", "wpa-supplica
 # 	"
 
 # while theFin is not yet ready ...
-xsession_thefin() {
-    mkdir ${IMAGE_ROOTFS}/etc/mini_x
-    ln -s ../../usr/bin/theFin-launcher ${IMAGE_ROOTFS}/etc/mini_x/session
-}
+# xsession_thefin() {
+#   mkdir ${IMAGE_ROOTFS}/etc/mini_x
+#   ln -s ../../usr/bin/theFin-launcher ${IMAGE_ROOTFS}/etc/mini_x/session
+# }
 
-ROOTFS_POSTPROCESS_COMMAND += "xsession_thefin;"
+# ROOTFS_POSTPROCESS_COMMAND += "xsession_thefin;"
