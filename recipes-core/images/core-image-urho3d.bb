@@ -4,7 +4,9 @@ SUMMARY = "A very basic urho3d image"
 
 SPLASH = "psplash-urho3d"
 
-IMAGE_INSTALL += "urho3d urho3d-project-template thefin"
+IMAGE_INSTALL += "urho3d thefin"
+IMAGE_INSTALL += "urho3d-project-template"
+
 IMAGE_FEATURES += "ssh-server-dropbear"
 # in theory helps psplash
 # IMAGE_INSTALL += "kernel-modules"
