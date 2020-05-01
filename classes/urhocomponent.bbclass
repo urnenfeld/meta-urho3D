@@ -5,6 +5,7 @@ URHO3D_COMPONENT_ID ?= "${URHO3D_GAME_ID}"
 
 URHO3D_ASSETS_BASE = "${datadir}/Urho3D"
 URHO3D_ASSETS_PATHS ?= "Data CoreData"
+URHO3D_ASSETS_CLEANUP ?= "blend"
 
 dassetsdir = "${URHO3D_ASSETS_BASE}/${URHO3D_COMPONENT_ID}-assets"
 sassetsdir ?= ""
@@ -24,6 +25,12 @@ do_install_append() {
     do
         install -d ${D}${dassetsdir}/$path
         cp --preserve=mode,timestamps -R ${S}${sassetsdir}/$path/* ${D}${dassetsdir}/$path
+    done
+
+    for extension in ${URHO3D_ASSETS_CLEANUP}
+    do
+        # Preserve IP and save space
+        find ${D}${dassetsdir} -name *.$extension -type f -delete
     done
 
 }
