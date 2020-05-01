@@ -40,5 +40,5 @@ do_install() {
     install -d ${D}${sysconfdir}
     install -d ${D}${sysconfdir}/mini_x
 
-    install -m 0755 ${WORKDIR}/thefinloop.sh ${D}${sysconfdir}/mini_x
+    install -m 0755 ${WORKDIR}/thefinloop.sh ${D}${sysconfdir}/mini_x/session
 }
