@@ -12,7 +12,7 @@ LIC_FILES_CHKSUM = "file://../git/LICENSE;md5=5d8bf837acaa37ac750d9fdf56fe9f54"
 
 S = "${WORKDIR}/git"
 
-URHO3D_COMPONENT_ID="theFin"
+URHO3D_COMPONENT_ID="thefin"
 
 URHO3D_REUSE_CORE_ASSETS = "1"
 URHO3D_ASSETS_PATHS = "Add1"
@@ -35,7 +35,7 @@ do_patch_append () {
 
 do_install() {
     install -d ${D}${bindir}
-    install -m 0755 ${S}/thefin ${D}${bindir}
+    install -m 0755 ${S}/${URHO3D_COMPONENT_ID} ${D}${bindir}
 
     install -d ${D}${sysconfdir}
     install -d ${D}${sysconfdir}/mini_x
