@@ -4,9 +4,13 @@ SUMMARY = "A very basic urho3d image"
 
 SPLASH = "psplash-urho3d"
 
+IMAGE_CODENAME = "hernan"
+IMAGE_VERSION_SUFFIX = "-${IMAGE_CODENAME}-${DATETIME}"
 # Core
 IMAGE_INSTALL += "urho3d thefin"
 IMAGE_INSTALL += "urho3d-project-template"
+
+LOCAL_GAMES ?= ""
 
 # Local / Closed
 IMAGE_INSTALL += "${LOCAL_GAMES}"
