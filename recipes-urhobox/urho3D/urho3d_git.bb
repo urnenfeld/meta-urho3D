@@ -62,6 +62,8 @@ EXTRA_OECMAKE_append_qemux86 = " -DURHO3D_SSE=0"
 # URHO3D_TOOLS: Linking problems, not intention to use in target yet...
 EXTRA_OECMAKE_append_rpi = " -DRPI=1 -DURHO3D_LUA=0 -DURHO3D_TOOLS=0"
 
+# AS will contain some ASM specifics "Error: thumb conditional instruction should be in IT block"
+TARGET_CC_ARCH_append_raspberrypi3 = " -Wa,-mimplicit-it=thumb"
 
 do_install_append() {
     # Remove all stuff that we don't want to get packaged
