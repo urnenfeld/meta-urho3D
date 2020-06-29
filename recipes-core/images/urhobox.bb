@@ -14,8 +14,8 @@ LOCAL_GAMES ?= ""
 IMAGE_INSTALL += "${LOCAL_GAMES}"
 
 IMAGE_FEATURES += "ssh-server-dropbear"
-# in theory helps psplash
-# IMAGE_INSTALL += "kernel-modules"
+# Bluetooth and other potential modules
+IMAGE_INSTALL += "kernel-modules"
 
 IMAGE_INSTALL += "${@bb.utils.contains("MACHINE_FEATURES", "wifi", "wpa-supplicant", "", d)}"
 # IMAGE_INSTALL += "${@bb.utils.contains("MACHINE_FEATURES", "bluetooth", "bluez5", "", d)}"
