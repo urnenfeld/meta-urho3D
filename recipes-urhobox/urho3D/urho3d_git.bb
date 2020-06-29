@@ -8,7 +8,7 @@ SRC_URI = "git://github.com/urho3d/Urho3D.git;protocol=https"
 # SRC_URI = "git://github.com/urho3d/Urho3D.git"
 SRC_URI += "file://003_select_samples.patch"
 
-SRC_URI_append_raspberrypi0-wifi += "file://000_trust_yocto_for_cpu_tunning.patch"
+SRC_URI_append_rpi += "file://000_trust_yocto_for_cpu_tunning.patch"
 
 # On why -I -isystem ...
 #   https://github.com/ponylang/ponyc/issues/797
@@ -26,14 +26,14 @@ SRC_URI_append_raspberrypi0-wifi += "file://000_trust_yocto_for_cpu_tunning.patc
 #   https://gitlab.kitware.com/cmake/cmake/issues/17364
 #   https://gitlab.kitware.com/cmake/cmake/issues/17348
 # => list (APPEND TARGET_PROPERTIES NO_SYSTEM_FROM_IMPORTED true) @UrhoCommon.cmake#1755
-SRC_URI_append_raspberrypi0-wifi += "${@bb.utils.contains("MACHINE_FEATURES", "vc4graphics", "file://005_do_not_search_videocore.patch", "file://001_magically_avoid_isystem.patch", d)}"
+SRC_URI_append_rpi += "${@bb.utils.contains("MACHINE_FEATURES", "vc4graphics", "file://005_do_not_search_videocore.patch", "file://001_magically_avoid_isystem.patch", d)}"
 
-SRC_URI_append_raspberrypi0-wifi += "${@bb.utils.contains("MACHINE_FEATURES", "vc4graphics", "file://006_use_x11_instead_rpi_video.patch", "", d)}"
+SRC_URI_append_rpi += "${@bb.utils.contains("MACHINE_FEATURES", "vc4graphics", "file://006_use_x11_instead_rpi_video.patch", "", d)}"
 
-SRC_URI_append_raspberrypi0-wifi += "file://002_avoid_brcm_gl_libs.patch"
+SRC_URI_append_rpi += "file://002_avoid_brcm_gl_libs.patch"
 # TODO: not needed with vc4graphics
-SRC_URI_append_raspberrypi0-wifi += "file://002a_search_vchostif_as_well.patch"
-SRC_URI_append_raspberrypi0-wifi += "file://004_not_stripping_shared_lib.patch"
+SRC_URI_append_rpi += "file://002a_search_vchostif_as_well.patch"
+SRC_URI_append_rpi += "file://004_not_stripping_shared_lib.patch"
 
 
 SRCREV="f1ca13db22e79d94003a11665ec27918220872b2"
@@ -43,8 +43,8 @@ LIC_FILES_CHKSUM = "file://LICENSE;md5=310c9a68fe03d6c6c8e20f238ef7e46d"
 S = "${WORKDIR}/git"
 
 DEPENDS = "virtual/libx11 libxext virtual/libgl"
-DEPENDS_append_raspberrypi0-wifi = " virtual/libgles2"
-#DEPENDS_append_raspberrypi0-wifi = " virtual/egl"
+DEPENDS_append_rpi = " virtual/libgles2"
+#DEPENDS_append_rpi = " virtual/egl"
 
 # Let yocto the stripping tasks(RelWithDebInfo, Release, Debug),
 EXTRA_OECMAKE = "-DCMAKE_BUILD_TYPE=Debug"
@@ -60,7 +60,7 @@ EXTRA_OECMAKE_append_qemux86 = " -DURHO3D_SSE=0"
 # URHO3D_LUA=0 : Problems checking for native compiler in CMakeLists.txt:205 (check_native_compiler_exist)
 # symt: SAVEC_CC are empty, however "/mnt/pyro/build-r0w/tmp/hosttools/gcc" is used, there typical arm options are passed => X
 # URHO3D_TOOLS: Linking problems, not intention to use in target yet...
-EXTRA_OECMAKE_append_raspberrypi0-wifi = " -DRPI=1 -DURHO3D_LUA=0 -DURHO3D_TOOLS=0"
+EXTRA_OECMAKE_append_rpi = " -DRPI=1 -DURHO3D_LUA=0 -DURHO3D_TOOLS=0"
 
 
 do_install_append() {
